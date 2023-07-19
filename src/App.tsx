@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import s from './App.module.css';
+import {Tablo} from './Component/Tablo';
+import {Button} from './Component/Button';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    let [state, setState] = useState(0)
+
+    const incHandler = () => {
+        if (state < 5) {
+            setState(state + 1)
+        }
+    }
+
+    const resetHandler = () => {
+        setState(0)
+    }
+
+
+    return (
+        <div className={s.center}>
+            <Tablo class={state >= 5 ? s.disabled : ''} state={state}/>
+            <div className={s.buttons}>
+                <Button disabled={state >= 5} name={'inc'} setState={incHandler} state={state}/>
+                <Button disabled={state === 0} name={'reset'} setState={resetHandler} state={state}/>
+            </div>
+
+        </div>
+    )
 }
 
 export default App;
