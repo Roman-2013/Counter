@@ -4,36 +4,64 @@ import {Counter} from './Component/Counter';
 import {Settings} from './Settings/Settings';
 
 function App() {
-    let [max,setMax]=useState(5)
-    let [min,setMin]=useState(0)
-    let [disable,setDisable]=useState(true)
+    let [max, setMax] = useState(5)
+    let [min, setMin] = useState(0)
+    let [disable, setDisable] = useState(true)
     let [state, setState] = useState(0)
-    let [error, setError] = useState<string|null>(null)
+    let [error, setError] = useState<string | null>(null)
+
+    useEffect(()=>{
+        let newMax=localStorage.getItem('maximal')
+        let newMin=localStorage.getItem('minimal')
+        let newState=localStorage.getItem('state')
+        if(newMax && newMin && newState){
+            setMax(+newMax)
+            setMin(+newMin)
+            setState(+newState)
+        }
+    },[])
+
 
 
     useEffect(()=>{
-        if(min<0||min===max||min>max){
+        localStorage.setItem('maximal',max.toString())
+        localStorage.setItem('minimal',min.toString())
+        localStorage.setItem('state',state.toString())
+
+    },[max,min,state])
+
+
+
+
+    useEffect(() => {
+        if (min < 0 || min === max || min > max) {
             setError('Incorrect value!')
             console.log(error)
-        }
-        else {
+        } else {
             setError(null)
             console.log(error)
         }
-        },[min,max])
+    }, [min, max])
 
-
-
-
-    const setMinHandler=(value:number)=>{
+    const setMinHandler = (value: number) => {
         setMin(value)
         setState(value)
     }
 
     return (
         <div className={s.center}>
-            <Settings error={error}  max={max} disableValue={disable}  disable={setDisable} setMin={(value)=>setMinHandler(value)} setMax={(value)=>setMax(value)} />
-            <Counter error={error}  setState={setState} state={state} disableValue={disable} min={min} max={max}/>
+            <Settings error={error}
+                      min={min}
+                      max={max}
+                      disableValue={disable}
+                      disable={setDisable}
+                      setMin={(value) => setMinHandler(value)}
+                      setMax={(value) => setMax(value)}/>
+            <Counter error={error}
+                     setState={setState}
+                     state={state}
+                     disableValue={disable}
+                     min={min} max={max}/>
         </div>
 
 
@@ -41,13 +69,6 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-
 
 
 //-------------------------------------------------------------------------

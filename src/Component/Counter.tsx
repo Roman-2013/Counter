@@ -11,21 +11,17 @@ type CounterPropsType={
     error:string|null
 }
  export const Counter = (props:CounterPropsType) => {
-
-
      const incHandler = () => {
          if (props.state < props.max) {
              props.setState(props.state + 1)
          }
      }
-
      const resetHandler = () => {
          props.setState(props.min)
      }
 
 
      return (
-
          <div className={s.center}>
              <Tablo  disableValue={props.disableValue}  class={props.state >= props.max ||props.error ? s.disabled :'' }error={props.error} state={props.state}/>
              <div className={s.buttons}>

@@ -5,6 +5,7 @@ type InputPropsType={
     callback:(value:string)=>void
     max?:number
     error:string|null
+    min?:number
 
 }
 export const Input = (props:InputPropsType) => {
@@ -12,7 +13,11 @@ export const Input = (props:InputPropsType) => {
     return (
         <div className={s.inputsContainer}>
             <span className={s.span}>{props.name}</span>
-            <input className={s.input+' '+(props.error?s.redInput:'') }  value={props.max} onChange={(e)=>props.callback(e.currentTarget.value)}  type="number"/>
+            <input className={s.input+' '+(props.error?s.redInput:'') }
+                   value={props.max||props.min}
+                   onChange={(e)=>props.callback(e.currentTarget.value)}
+                   type="number"
+            />
         </div>
     );
 };
