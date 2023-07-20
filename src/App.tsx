@@ -47,6 +47,10 @@ function App() {
         setMin(value)
         setState(value)
     }
+    const setMaxHandler=(value:number)=>{
+        setMax(value)
+        setState(0)
+    }
 
     return (
         <div className={s.center}>
@@ -56,7 +60,7 @@ function App() {
                       disableValue={disable}
                       disable={setDisable}
                       setMin={(value) => setMinHandler(value)}
-                      setMax={(value) => setMax(value)}/>
+                      setMax={(value) =>  setMaxHandler(value)}/>
             <Counter error={error}
                      setState={setState}
                      state={state}
